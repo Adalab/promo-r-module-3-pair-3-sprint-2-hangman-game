@@ -1,0 +1,42 @@
+// RESET
+
+@font-face {
+  font-family: 'KgTenThousandReasons';
+  src: url('./KgTenThousandReasons-R1ll.ttf') format('truetype');
+}
+
+* {
+  font-family: 'KgTenThousandReasons', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-weight: normal;
+  color: white;
+}
+
+// COMMON STYLES
+
+.title {
+  display: block;
+  font-size: 1.25rem;
+  line-height: 1;
+  text-align: center;
+}
+
+// PAGE
+
+.page {
+  padding: 2rem;
+  width: 100%;
+  min-height: 100vh;
+  background-image: url('../images/blackboard.jpg');
+  background-size: cover;
+  background-position: center center;
+}
+
+// MAIN
+
+.main {
+  display: flex;
+  justify-content: center;
+}
