@@ -4,20 +4,22 @@ import { useEffect, useState } from 'react';
 import Header from './Header';
 import Dummy from './Dummy';
 import SolutionsLetters from './SolutionsLetters';
+import ErrorLetters from './ErrorLetters';
 
 // api
 import getWordFromApi from '../services/api';
+
 // styles
 import '../styles/App.scss';
 import '../styles/Dummy.scss';
-
 import '../styles/Form.scss';
+import Form from './Form';
 
 function App() {
   const [word, setWord] = useState('');
   const [userLetters, setUserLetters] = useState([]);
   const [lastLetter, setLastLetter] = useState('');
-
+  
   useEffect(() => {
     getWordFromApi().then((word) => {
       setWord(word);
@@ -38,29 +40,11 @@ function App() {
     }
   };
 
-  const handleSubmit = (ev) => {
-    ev.preventDefault();
-  };
-
   const getNumberOfErrors = () => {
     const errorLetters = userLetters.filter(
       (letter) => word.includes(letter) === false
     );
     return errorLetters.length;
-  };
-
-  const renderErrorLetters = () => {
-    const errorLetters = userLetters.filter(
-      (letter) =>
-        word.toLocaleLowerCase().includes(letter.toLocaleLowerCase()) === false
-    );
-    return errorLetters.map((letter, index) => {
-      return (
-        <li key={index} className="letter">
-          {letter}
-        </li>
-      );
-    });
   };
 
   const handleLastLetter = (value) => {
@@ -79,28 +63,8 @@ function App() {
       <main className="main">
         <section>
           <SolutionsLetters word={word} userLetters={userLetters} />
-
-          <div className="error">
-            <h2 className="title">Letras falladas:</h2>
-            <ul className="letters">{renderErrorLetters()}</ul>
-          </div>
-          <form className="form" onSubmit={handleSubmit}>
-            <label className="title" htmlFor="last-letter">
-              Escribe una letra:
-            </label>
-            <input
-              autoFocus
-              autoComplete="off"
-              className="form__input"
-              maxLength="1"
-              type="text"
-              name="last-letter"
-              id="last-letter"
-              value={lastLetter}
-              onKeyDown={handleKeyDown}
-              onChange={handleChange}
-            />
-          </form>
+          <ErrorLetters word={word} userLetters={userLetters}/>
+          <Form lastLetter={lastLetter} handleKeyDown={handleKeyDown} handleChange={handleChange}/>
         </section>
         <Dummy numberOfErrors={getNumberOfErrors()}></Dummy>
       </main>

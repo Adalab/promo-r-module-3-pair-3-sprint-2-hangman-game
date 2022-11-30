@@ -1,6 +1,4 @@
 const Dummy = (prop) => {
-  console.log(prop);
-
   return (
     <section className={`dummy error-${prop.numberOfErrors}`}>
       <span className="error-13 eye"></span>
