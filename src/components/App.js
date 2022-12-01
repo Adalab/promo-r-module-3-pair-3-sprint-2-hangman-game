@@ -1,19 +1,19 @@
-// FALTA COMPONETIZAR LAS LETRAS FALLADAS
-
 import { useEffect, useState } from 'react';
+import {Route, Routes} from 'react-router-dom';
+
 import Header from './Header';
 import Dummy from './Dummy';
 import SolutionsLetters from './SolutionsLetters';
 import ErrorLetters from './ErrorLetters';
+import Footer from './Footer';
+import Form from './Form';
 
 // api
 import getWordFromApi from '../services/api';
 
 // styles
 import '../styles/App.scss';
-import '../styles/Dummy.scss';
-import '../styles/Form.scss';
-import Form from './Form';
+
 
 function App() {
   const [word, setWord] = useState('');
@@ -62,12 +62,19 @@ function App() {
       <Header></Header>
       <main className="main">
         <section>
-          <SolutionsLetters word={word} userLetters={userLetters} />
-          <ErrorLetters word={word} userLetters={userLetters}/>
-          <Form lastLetter={lastLetter} handleKeyDown={handleKeyDown} handleChange={handleChange}/>
+          <Routes>
+            <Route path='/' element={<SolutionsLetters word={word} userLetters={userLetters} />}>
+              {/* <ErrorLetters word={word} userLetters={userLetters}/>
+              <Form lastLetter={lastLetter} handleKeyDown={handleKeyDown} handleChange={handleChange} /> */}
+            </Route>
+
+            {/* PREGUNTAR ESTO MAÑANA. */}
+            
+        </Routes>  
         </section>
         <Dummy numberOfErrors={getNumberOfErrors()}></Dummy>
       </main>
+      <Footer />
     </div>
   );
 }

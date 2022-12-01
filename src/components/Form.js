@@ -1,3 +1,5 @@
+import '../styles/Form.scss';
+
 const Form = (props) => {
     const handleSubmit = (ev) => {
         ev.preventDefault();
