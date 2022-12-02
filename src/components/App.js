@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {Route, Routes} from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import Header from './Header';
 import Dummy from './Dummy';
@@ -7,6 +7,9 @@ import SolutionsLetters from './SolutionsLetters';
 import ErrorLetters from './ErrorLetters';
 import Footer from './Footer';
 import Form from './Form';
+import Instructions from './Instructions';
+import Options from './Options';
+import Loading from './Loading';
 
 // api
 import getWordFromApi from '../services/api';
@@ -14,16 +17,18 @@ import getWordFromApi from '../services/api';
 // styles
 import '../styles/App.scss';
 
-
 function App() {
   const [word, setWord] = useState('');
   const [userLetters, setUserLetters] = useState([]);
   const [lastLetter, setLastLetter] = useState('');
-  
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
+    setIsLoading(true);
     getWordFromApi().then((word) => {
       setWord(word);
     });
+    setIsLoading(false);
   }, []);
 
   // events
@@ -60,17 +65,28 @@ function App() {
   return (
     <div className="page">
       <Header></Header>
+      <Loading isLoading={isLoading} />
       <main className="main">
         <section>
           <Routes>
-            <Route path='/' element={<SolutionsLetters word={word} userLetters={userLetters} />}>
-              {/* <ErrorLetters word={word} userLetters={userLetters}/>
-              <Form lastLetter={lastLetter} handleKeyDown={handleKeyDown} handleChange={handleChange} /> */}
-            </Route>
+            <Route
+              path="/"
+              element={
+                <>
+                  <SolutionsLetters word={word} userLetters={userLetters} />
+                  <ErrorLetters word={word} userLetters={userLetters} />
+                  <Form
+                    lastLetter={lastLetter}
+                    handleKeyDown={handleKeyDown}
+                    handleChange={handleChange}
+                  />
+                </>
+              }
+            ></Route>
 
-            {/* PREGUNTAR ESTO MAÑANA. */}
-            
-        </Routes>  
+            <Route path="/instructions" element={<Instructions />}></Route>
+            <Route path="/options" element={<Options />}></Route>
+          </Routes>
         </section>
         <Dummy numberOfErrors={getNumberOfErrors()}></Dummy>
       </main>
