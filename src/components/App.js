@@ -7,6 +7,8 @@ import SolutionsLetters from './SolutionsLetters';
 import ErrorLetters from './ErrorLetters';
 import Footer from './Footer';
 import Form from './Form';
+import Instructions from './Instructions';
+import Options from './Options';
 
 // api
 import getWordFromApi from '../services/api';
@@ -63,13 +65,17 @@ function App() {
       <main className="main">
         <section>
           <Routes>
-            <Route path='/' element={<SolutionsLetters word={word} userLetters={userLetters} />}>
-              {/* <ErrorLetters word={word} userLetters={userLetters}/>
-              <Form lastLetter={lastLetter} handleKeyDown={handleKeyDown} handleChange={handleChange} /> */}
+            <Route path='/' element={
+              <>
+              <SolutionsLetters word={word} userLetters={userLetters} />
+              <ErrorLetters word={word} userLetters={userLetters}/>
+              <Form lastLetter={lastLetter} handleKeyDown={handleKeyDown} handleChange={handleChange} />
+              </>
+              }>
             </Route>
 
-            {/* PREGUNTAR ESTO MAÑANA. */}
-            
+            <Route path='/instructions' element={<Instructions />}></Route>
+            <Route path='/options' element={<Options />}></Route> 
         </Routes>  
         </section>
         <Dummy numberOfErrors={getNumberOfErrors()}></Dummy>
